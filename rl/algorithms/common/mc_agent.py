@@ -42,7 +42,7 @@ class StateActionStats:
         """
         self.stats[state][action] += 1
 
-    def update_importance_sampling(self, state: Tuple[int, ...], action: int, importance_sampling_ratio: float) -> None:
+    def update_importance_sampling(self, state: Tuple[int, ...], action: int, importance_sampling_ratio: float)-> None:
         """
         Updates the cumulative sum of importance sampling ratios.
 
@@ -51,9 +51,7 @@ class StateActionStats:
             action (int): The action.
             importance_sampling_ratio (float): The importance sampling ratio.
         """
-        # HOMEWORK: Update the cumulative sum of importance sampling ratios
-        # C(s, a) <- C(s, a) + W
-        self.stats[state][action] += importance_sampling_ratio
+        pass  # TODO: Implement this function
 
 
 class MonteCarloAgent(BaseAgent):
@@ -114,7 +112,7 @@ class MonteCarloAgent(BaseAgent):
                 return True
         return False
 
-    def _generate_episode(self, exploring_starts: bool = True) -> List[Tuple[Tuple[int, ...], int, float]]:
+    def _generate_episode(self, exploring_starts: bool = True)-> List[Tuple[Tuple[int, ...], int, float]]:
         """
         Generates an episode by interacting with the environment.
 
@@ -125,41 +123,8 @@ class MonteCarloAgent(BaseAgent):
             List[Tuple[Tuple[int, ...], int, float]]:
             The generated episode consisting of (state, action, reward) tuples.
         """
-        episode: List = []
+        pass  # TODO: Implement this function
 
-        # Reset environment
-        if exploring_starts:
-            state, info = self.env.reset()  # S_0
-            action: int = np.random.randint(0, self.env.action_space.n)  # A_0: choice of {0, 1}
-        else:
-            state, info = self.env.reset()
-            action = self.act(state)
-
-        # Generate an episode
-        while True:
-
-            # HOMEWORK: Make a step of the environment (c.f. Gymnasium API: https://gymnasium.farama.org/api/env/)
-            next_state, reward, terminated, truncated, info = self.env.step(action)
-
-            # HOMEWORK: Append the state, action, and reward to the episode
-            episode.append((state, action, reward))
-
-            # HOMEWORK: establish if done (this is when either of the boolean flags terminated or truncated are True)
-            done: bool = terminated or truncated
-
-            if done:
-                break
-
-            # HOMEWORK: the next state becomes the current state
-            state = next_state
-
-            # HOMEWORK: the next action is selected by the agent
-            action = self.act(state)
-
-        # Log timestep
-        self.logger.log_timestep(reward)
-
-        return episode
 
     def reset(self) -> None:
         """

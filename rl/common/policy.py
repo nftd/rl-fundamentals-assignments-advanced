@@ -47,7 +47,7 @@ class DeterministicPolicy(BasePolicy):
         super().__init__(action_space=int(np.prod(state_shape)))
         self.action_map: np.ndarray = np.zeros(state_shape, dtype=dtype)
 
-    def select_action(self, state: Tuple[int, ...]) -> int:
+    def select_action(self, state: Tuple[int, ...])-> int:
         """
         Selects an action based on the current policy.
 
@@ -57,9 +57,8 @@ class DeterministicPolicy(BasePolicy):
         Returns:
             int: The action selected by the policy.
         """
-        # HOMEWORK: with the given state, return the action (1:1 mapping as deterministic) via self.action_map
-        action: int = self.action_map[state]
-        return action
+        pass  # TODO: Implement this function
+
 
     def update(
             self,
@@ -124,7 +123,7 @@ class EpsilonGreedyPolicy(BasePolicy):
             return action
         # HOMEWORK ENDS
 
-    def compute_probs(self, state: Tuple[int, ...], q_values: QValueTable) -> np.ndarray:
+    def compute_probs(self, state: Tuple[int, ...], q_values: QValueTable)-> np.ndarray:
         """
         Computes the action probabilities for the given state.
 
@@ -139,16 +138,6 @@ class EpsilonGreedyPolicy(BasePolicy):
         Returns:
             np.ndarray: The probability distribution over actions.
         """
-        # Initialise probabilities as epsilon / size of action space everywhere. Useful:
-        # - np.ones
-        # - self.action_space
-        # - self.epsilon
-        probs: np.ndarray = np.ones(self.action_space) * self.epsilon / self.action_space
+        pass  # TODO: Implement this function
 
-        # HOMEWORK: find the best action (q_values has a relevant method for this)
-        best_action: int = q_values.get_max_action(state)
 
-        # HOMEWORK: update the probability of the best action to 1 - epsilon + epsilon / action_space
-        probs[best_action] = 1 - self.epsilon + self.epsilon / self.action_space
-
-        return probs

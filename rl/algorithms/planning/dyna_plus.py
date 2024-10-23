@@ -79,7 +79,7 @@ class TimeSinceLastEncountered(QValueTable):
         """
         super().__init__((num_states,), num_actions)
 
-    def increment(self, state: Union[int, Tuple[int, ...]], action: int) -> None:
+    def increment(self, state: Union[int, Tuple[int, ...]], action: int)-> None:
         """
         Increment all values in the table by 1, except for the specified (state, action) pair which is reset to 0.
 
@@ -87,11 +87,7 @@ class TimeSinceLastEncountered(QValueTable):
             state (Union[int, Tuple[int, ...]]): The state to reset.
             action (int): The action to reset.
         """
-        # HOMEWORK: Increment values for all (S, A) pairs by 1
-        self.values += 1
-
-        # HOMEWORK: Except for the (state, action) pair, which is reset to 0 (use self.update with the right arguments)
-        self.update(state, action, 0)
+        pass  # TODO: Implement this function
 
 
 class DynaPlus(Dyna):
@@ -144,81 +140,13 @@ class DynaPlus(Dyna):
             self.env.action_space.n
         )
 
-    def learn(self, num_episodes: int = 500) -> None:
+    def learn(self, num_episodes: int = 500)-> None:
         """
         Train the agent using the Dyna-Q+ algorithm.
 
         Args:
             num_episodes (int): Number of episodes to train the agent for.
         """
-        # HOMEWORK STARTS: Implement the Dyna-Q+ algorithm (~25-30 lines).
+        pass  # TODO: Implement this function
 
-        for episode in range(num_episodes):
-            # Initialise S (**a**)
-            state: Union[int, Tuple[int, ...]]
-            state, _ = self.env.reset()
 
-            # Loop over each step of episode, until S is terminal
-            done: bool = False
-            while not done:
-                # Choose A from S using policy derived from Q (epsilon-greedy) (**b**)
-                action: int = self.act(state)
-
-                # Take action A, observe R, S' (**c**)
-                next_state: Union[int, Tuple[int, ...]]
-                reward: float
-                next_state, reward, terminated, truncated, _ = self.env.step(action)
-
-                # Update Q(S, A) (**d**)
-                td_target: float = reward + self.gamma * self.q_values.get(next_state, self.q_values.get_max_action(next_state))  # NoQA
-                td_error: float = td_target - self.q_values.get(state, action)
-                new_value: float = self.q_values.get(state, action) + self.alpha * td_error
-                self.q_values.update(state, action, new_value)
-
-                # Update logs
-                if self.logger:
-                    self.logger.log_timestep(reward)
-
-                # Update model (**e**).
-                self.model.add(state, action, reward, next_state)
-
-                # Update time since last encountered
-                self.time_since_last_encountered.increment(state, action)
-
-                # Loop for n planning steps, and perform planning updates (**f**)
-                for _ in range(self.n_planning_steps):
-                    # Choose a random, previously observed state and any action (**f.i, f.ii**)
-                    state_plan: Union[int, Tuple[int, ...]]
-                    action_plan: int
-                    state_plan, action_plan = self.model.sample_state_action()
-
-                    # TODO: different from Dyna (no values as lists)
-                    # Get reward and next state from model (**f.iii**)
-                    # `next_state_plan` ensures next state from learning is not mixed up with next state from planning
-                    # (for S <- S')
-                    reward_plan: float
-                    next_state_plan: Union[int, Tuple[int, ...]]
-                    reward_plan, next_state_plan = self.model.get(state_plan, action_plan)
-
-                    # Get time since last encountered for (s, a)
-                    time_since_last_encountered: int = self.time_since_last_encountered.get(state_plan, action_plan)
-
-                    # Update Q(S, A), taking as target the q-learning TD target **with Dyna-Q+** additional term:
-                    # TD_target = R + gamma * max_a Q(S', a) + kappa * sqrt(time_since_last_encountered) (**f.iv**)
-                    reward_with_bonus: float = reward_plan + self.kappa * np.sqrt(time_since_last_encountered)
-                    td_target = reward_with_bonus + self.gamma * np.max(self.q_values.get(next_state_plan))
-                    td_error = td_target - self.q_values.get(state_plan, action_plan)
-                    new_value = self.q_values.get(state_plan, action_plan) + self.alpha * td_error
-                    self.q_values.update(state_plan, action_plan, new_value)
-
-                # S <- S'
-                state = next_state
-
-                # If S is terminal, then episode is done (exit loop)
-                done = terminated or truncated
-
-            # Update logs
-            if self.logger:
-                self.logger.log_episode()
-
-        # HOMEWORK ENDS

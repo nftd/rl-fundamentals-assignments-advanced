@@ -64,7 +64,7 @@ class MCOnPolicy(MonteCarloAgent):
         # Policy method specific to On-Policy and Off-Policy MC (not ES)
         self.policy = EpsilonGreedyPolicy(self.epsilon, self.env.action_space.n)
 
-    def act(self, state: Tuple[int, ...]) -> int:
+    def act(self, state: Tuple[int, ...])-> int:
         """
         Selects an action based on the epsilon-greedy policy.
 
@@ -74,51 +74,17 @@ class MCOnPolicy(MonteCarloAgent):
         Returns:
             int: The action selected by the policy.
         """
-        # HOMEWORK: sample an action from the epsilon-greedy policy
-        action: int = self.policy.select_action(state, self.q_values)
+        pass  # TODO: Implement this function
 
-        return action
 
-    def learn(self, num_episodes: int = 10000) -> None:
+    def learn(self, num_episodes: int = 10000)-> None:
         """
         Learns an optimal policy using Monte Carlo on-policy control.
 
         Args:
             num_episodes (int): The number of episodes to train the agent for.
         """
-        for episode_idx in range(num_episodes):
-            if episode_idx % 1000 == 0:
-                print(f"Episode {episode_idx}/{num_episodes}")
-
-            # Generate an episode
-            # HOMEWORK: Generate an episode.
-            # In the Exploring Starts module, you used `exploring_starts=True`.
-            # Here, we want to use `exploring_starts=False`.
-            episode = self._generate_episode(exploring_starts=False)
-
-            # Loop through the episode in reverse order, updating the q-values and policy
-            # HOMEWORK STARTS: (~10 lines of code) Update the q-values by looping through the episode in reverse order.
-            # This part of the code is almost identical to the Exploring Starts module learn method,
-            # but note that we do not need the final line to update the policy here.
-            returns: float = 0
-            for t, (state, action, reward) in enumerate(reversed(episode)):
-                returns = self.gamma * returns + reward
-
-                # If the S_t, A_t pair has been seen before, continue.
-                if self._is_subelement_present((state, action), episode[:len(episode) - t - 1]):
-                    continue
-
-                # Update the q-value for this state-action pair
-                # NewEstimate <- OldEstimate + 1/N(St, At) * (Return - OldEstimate)
-                mc_error: float = returns - self.q_values.get(state, action)
-                self.state_action_stats.update(state, action)  # Get N(St, At)
-                step_size: float = 1 / self.state_action_stats.get(state, action)
-                new_value: float = self.q_values.get(state, action) + step_size * mc_error
-                self.q_values.update(state, action, new_value)
-            # HOMEWORK ENDS
-
-            # Log the episode
-            self.logger.log_episode()
+        pass  # TODO: Implement this function
 
 
 def run(num_episodes: int = 50000) -> None:

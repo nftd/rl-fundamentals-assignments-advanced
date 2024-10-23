@@ -24,10 +24,26 @@ MAP_THREE_THREE = [
 ]
 
 
-def solve_two_by_two(*args, **kwargs):
+def solve_two_by_two():
+    """
+    Solves the 2x2 FrozenLake map by setting up and solving the linear system Av = b.
+
+    Returns:
+        v (numpy.ndarray): Array of state values.
+    """
     pass  # TODO: Implement this function
-def solve_three_by_three(*args, **kwargs):
+
+
+def solve_three_by_three():
+    """
+    Solves the 3x3 FrozenLake map by setting up and solving the linear system Av = b.
+
+    Returns:
+        v (numpy.ndarray): Array of state values.
+    """
     pass  # TODO: Implement this function
+
+
 def main():
     """
     Main function to handle command-line arguments and execute corresponding actions.

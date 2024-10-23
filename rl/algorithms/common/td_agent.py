@@ -46,7 +46,7 @@ class TemporalDifferenceAgent(BaseAgent):
         self.policy = EpsilonGreedyPolicy(self.epsilon, self.env.action_space.n)
         self.logger.reset()
 
-    def act(self, state: int) -> int:
+    def act(self, state: int)-> int:
         """
         Selects an action from the policy based on the given state.
 
@@ -56,9 +56,8 @@ class TemporalDifferenceAgent(BaseAgent):
         Returns:
             int: The action selected by the policy.
         """
-        # HOMEWORK: Select the action from the policy
-        action: int = self.policy.select_action(state, self.q_values)
-        return action
+        pass  # TODO: Implement this function
+
 
     def learn(self, num_episodes: int = 500) -> None:
         """

@@ -27,51 +27,13 @@ class Sarsa(TemporalDifferenceAgent):
         super().__init__(env, gamma, alpha, epsilon, logger, random_seed)
         self.name: str = "Sarsa"
 
-    def learn(self, num_episodes: int = 500) -> None:
+    def learn(self, num_episodes: int = 500)-> None:
         """
         Trains the SARSA agent for a given number of episodes.
 
         Args:
             num_episodes (int): Number of episodes to train the agent.
         """
-        for episode in range(num_episodes):
+        pass  # TODO: Implement this function
 
-            # Initialise S
-            state, _ = self.env.reset()
 
-            # HOMEWORK: Choose A from S using policy derived from Q (epsilon-greedy)
-            # N.B. Implement the act method in the TemporalDifferenceAgent superclass
-            action: int = self.act(state)
-
-            # Loop over each step of episode, until S is terminal
-            done: bool = False
-            while not done:
-
-                # HOMEWORK: Make a step of the environment; observe R, S'
-                next_state, reward, terminated, truncated, _ = self.env.step(action)
-
-                # HOMEWORK: Choose A' from S' using policy derived from Q (epsilon-greedy)
-                next_action: int = self.act(next_state)
-
-                # HOMEWORK STARTS: (~3-4 lines).
-                # Update Q(S, A), taking as target the TD target (R + gamma * Q(S', A'))
-                # You ultimately want to update via self.q_values.update(...)
-                td_target: float = reward + self.gamma * self.q_values.get(next_state, next_action)
-                td_error: float = td_target - self.q_values.get(state, action)
-                new_value: float = self.q_values.get(state, action) + self.alpha * td_error
-                self.q_values.update(state, action, new_value)
-                # HOMEWORK ENDS
-
-                # HOMEWORK STARTS: S <- S', A <- A' (2 lines)
-                state = next_state
-                action = next_action
-                # HOMEWORK ENDS
-
-                # HOMEWORK: Add reward to episode reward log (self.logger.log_timestep(...))
-                self.logger.log_timestep(reward)
-
-                # HOMEWORK: If S is terminal, then episode is done (will exit "while" loop)
-                done = terminated or truncated
-
-            # Add episode reward to list
-            self.logger.log_episode()

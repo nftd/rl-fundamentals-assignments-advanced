@@ -59,26 +59,17 @@ class EpsilonGreedy:
 
         self.action_counts = np.zeros(self.num_actions)
 
-    def act(self) -> int:
+    def act(self)-> int:
         """
         Select an action using the epsilon-greedy policy.
 
         Returns:
             int: The action selected.
         """
+        pass  # TODO: Implement this function
 
-        if np.random.random() < self.epsilon:
-            # HOMEWORK: explore by selecting a random action
-            # (use np.random.randint, with the number of actions as the upper bound)
-            exploratory_action = np.random.randint(0, self.num_actions)
-            return exploratory_action
 
-        else:
-            # HOMEWORK: exploit by selecting the action with the highest estimated value
-            # (use argmax_ties_random to break ties randomly)
-            return argmax_ties_random(self.q_values)
-
-    def simple_update(self, action: int, reward: float) -> None:
+    def simple_update(self, action: int, reward: float)-> None:
         """
         Update the action-value estimate using sample averages.
 
@@ -86,13 +77,10 @@ class EpsilonGreedy:
             action (int): The action taken.
             reward (float): The reward received.
         """
-        # HOMEWORK: Increment N(A) for the selected action (c.f. self.action_counts).
-        self.action_counts[action] += 1
+        pass  # TODO: Implement this function
 
-        # HOMEWORK: Update self.q_values[action] using the incremental formula for sample averages.
-        self.q_values[action] += (1 / self.action_counts[action]) * (reward - self.q_values[action])
 
-    def weighted_update(self, action: int, reward: float) -> None:
+    def weighted_update(self, action: int, reward: float)-> None:
         """
         Update the action-value estimate using a constant step size.
 
@@ -100,9 +88,8 @@ class EpsilonGreedy:
             action (int): The action taken.
             reward (float): The reward received.
         """
-        # HOMEWORK:
-        # Update self.q_values[action] using the weighted average formula with step size alpha.
-        self.q_values[action] += self.alpha * (reward - self.q_values[action])
+        pass  # TODO: Implement this function
+
 
     def train(self) -> Tuple[pd.DataFrame, pd.DataFrame]:
         """

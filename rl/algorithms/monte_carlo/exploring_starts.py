@@ -74,7 +74,7 @@ class MCExploringStartsAgent(MonteCarloAgent):
         # Initialise q-values, policy, and returns
         self._init_policy(self.state_shape)
 
-    def act(self, state: Tuple[int, ...]) -> int:
+    def act(self, state: Tuple[int, ...])-> int:
         """
         Selects an action based on the current policy.
 
@@ -84,67 +84,17 @@ class MCExploringStartsAgent(MonteCarloAgent):
         Returns:
             int: The action selected by the policy.
         """
-        # HOMEWORK: use a method from the policy to select an action
-        action: int = self.policy.select_action(state)
+        pass  # TODO: Implement this function
 
-        return action
 
-    def learn(self, num_episodes: int = 10000) -> None:
+    def learn(self, num_episodes: int = 10000)-> None:
         """
         Learns the optimal policy using Monte Carlo Exploring Starts.
 
         Args:
             num_episodes (int): The number of episodes to train for.
         """
-
-        for episode_idx in range(num_episodes):
-
-            # Print progress
-            if episode_idx % 1000 == 0:
-                print(f"Episode {episode_idx}/{num_episodes}")
-
-            # HOMEWORK: Generate an episode.
-            # There is a helper method for this within the superclass. Make sure to use exploring starts.
-            episode: List[Tuple[Tuple[int, ...], int, float]] = self._generate_episode(exploring_starts=True)
-
-            # Loop through the episode in reverse order, updating the q-values and policy
-            returns: float = 0
-            for t, (state, action, reward) in enumerate(reversed(episode)):
-
-                # HOMEWORK: G <- gamma * G + R_t+1
-                returns = self.gamma * returns + reward
-
-                # If the S_t, A_t pair has been seen before, continue to next for loop iteration
-                # (this bit enacts first-visit MC)
-                if self._is_subelement_present((state, action), episode[:len(episode) - t - 1]):
-                    continue
-
-                # Update the q-value for this state-action pair
-                # NewEstimate <- OldEstimate + 1/N(St, At) * (Return - OldEstimate)
-                # We'll do this in steps
-
-                # HOMEWORK: Calculate the monte carlo error, G - Q(S_t, A_t).
-                # Use the q_values dictionary to get the current estimate.
-                mc_error: float = returns - self.q_values.get(state, action)
-
-                # HOMEWORK: Increment N(St, At).
-                # self.state_action_stats tracks N(St, At), and has a method to update it.
-                self.state_action_stats.update(state, action)
-
-                # HOMEWORK: step_size = 1 / N(St, At)
-                step_size: float = 1 / self.state_action_stats.get(state, action)
-
-                # HOMEWORK: Calculate NewEstimate = OldEstimate + 1/N(St, At) * (Return - OldEstimate)
-                new_value: float = self.q_values.get(state, action) + step_size * mc_error
-
-                # Update action value array with new estimate
-                self.q_values.update(state, action, new_value)
-
-                # Update the policy
-                self.policy.update(state, self.q_values)
-
-            # Log the episode
-            self.logger.log_episode()
+        pass  # TODO: Implement this function
 
 
 def smooth(x: np.ndarray, window: int = 1000) -> np.ndarray:
