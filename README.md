@@ -43,7 +43,37 @@ need to master Reinforcement Learning concepts.
     cd rl-fundamentals-assignments
     ```
 
-3. **Explore Assignments:**
+3. **Create a Virtual Environment:**
+
+    Make sure you have Python installed. Then, create a virtual environment:
+
+    ```bash
+    python -m venv venv
+    ```
+
+4. **Activate the Virtual Environment:**
+
+    - On **Windows**:
+
+      ```bash
+      venv\Scripts\activate
+      ```
+
+    - On **macOS/Linux**:
+
+      ```bash
+      source venv/bin/activate
+      ```
+
+5. **Install the Required Packages:**
+
+    Once the virtual environment is activated, run:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+6. **Explore Assignments:**
 
     Each assignment has its own markdown file within the `assignments/` directory. Navigate to the desired assignment folder and follow the guidelines to complete the tasks.
 
