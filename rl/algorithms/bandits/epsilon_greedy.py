@@ -66,7 +66,13 @@ class EpsilonGreedy:
         Returns:
             int: The action selected.
         """
-        pass  # TODO: Implement this function
+        if np.random.rand() < self.epsilon:
+            # Explore: choose a random action
+            action = np.random.choice(self.num_actions)
+        else:
+            # Exploit: choose the action with the highest estimated value
+            action = argmax_ties_random(self.q_values)
+        return action
 
 
     def simple_update(self, action: int, reward: float)-> None:
@@ -77,7 +83,10 @@ class EpsilonGreedy:
             action (int): The action taken.
             reward (float): The reward received.
         """
-        pass  # TODO: Implement this function
+        self.action_counts[action] += 1
+        self.q_values[action] += (
+            reward - self.q_values[action]
+        ) / self.action_counts[action]
 
 
     def weighted_update(self, action: int, reward: float)-> None:
@@ -88,7 +97,9 @@ class EpsilonGreedy:
             action (int): The action taken.
             reward (float): The reward received.
         """
-        pass  # TODO: Implement this function
+        self.action_counts[action] += 1
+        self.q_values[action] += self.alpha * (reward - self.q_values[action])
+
 
 
     def train(self) -> Tuple[pd.DataFrame, pd.DataFrame]:

@@ -33,7 +33,10 @@ def argmax_ties_random(q_values: np.ndarray)-> int:
     Returns:
         int: The action to take.
     """
-    pass  # TODO: Implement this function
+    for index in range(len(q_values)):
+        if q_values[index] == np.max(q_values):
+            return np.random.choice(np.where(q_values == q_values[index])[0])
+
 
 
 def argmax_ties_last(q_values: np.ndarray) -> int:
