@@ -4,3 +4,4 @@
 /venv/
 /stitched_videos/
 /videos/
+*.cpython-39.pyc
