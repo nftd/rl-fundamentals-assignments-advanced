@@ -31,7 +31,10 @@ def solve_two_by_two():
     Returns:
         v (numpy.ndarray): Array of state values.
     """
-    pass  # TODO: Implement this function
+    A = np.identity(3) - ((GAMMA / 4) * np.array([[2, 1, 1], [1, 2, 0], [1, 0, 2]]))
+    b = np.array([[0], [1/4], [1/4]])
+    v = np.linalg.solve(A, b)
+    return v
 
 
 def solve_three_by_three():
@@ -41,7 +44,10 @@ def solve_three_by_three():
     Returns:
         v (numpy.ndarray): Array of state values.
     """
-    pass  # TODO: Implement this function
+    A = np.identity(5) - ((GAMMA / 4)) * np.array([[2, 1, 0, 0, 0], [1, 1, 1, 1, 0], [0, 1, 2, 0, 0], [0, 1, 0, 0, 1], [0, 0, 0, 1, 1]])
+    b = np.array([[0], [0], [0], [0], [1/4]])
+    v = np.linalg.solve(A, b)
+    return v
 
 
 def main():
